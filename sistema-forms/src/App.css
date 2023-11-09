@@ -1,38 +1,76 @@
+@font-face {
+  font-family: 'SuaFonte'; /* Escolha um nome para a fonte */
+  src: url('./fonte/PeckhamPress-Trial.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Outros estilos CSS aqui */
+
 .App {
+  background-color: #1f1f1f;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  font-size: 2em;
+  font-family: '', sans-serif;
+
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+p {
+  font-size: 1.2em;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.buttons {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-top: 50px;
 }
 
-.App-link {
-  color: #61dafb;
+.button {
+  width: 210px;
+  height: 50px;
+  padding: 25px;
+  margin: 10px;
+  color: #000000;
+  line-height: 46px;
+  text-align: center;
+  font-size: 1.4em;
+  font-family: 'Archivo', sans-serif;
+  font-weight: bold;
+  background-color: #ccff00;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.buttonm {
+  width: 210px; 
+  height: 50px;
+  padding: 25px;
+  margin: 10px;
+  color: #000000;
+  line-height: 24px;
+  text-align: center;
+  font-size: 1.4em;
+  font-family: 'Archivo', sans-serif;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  background-color: #ccff00;
 }
+
+
+.button:hover {
+  background-color: #c4ff01; /* Cor de fundo verde mais escura no hover */
+}
+
