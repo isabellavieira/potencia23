@@ -1,23 +1,22 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PedidosOracaoPage from './Components/PedidosOracaoPage';
+import EnviarTestemunhosPage from './Components/EnviarTestemunhosPage';
+import SorteioPage from './Components/SorteioPage';
+import HomePage from './Components/HomePage';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <div className="container">
-        <h1>Olá!</h1>
-        <p>Aqui vem a frase que você decidirá posteriormente.</p>
-        <div className="buttons">
-          <a href="#" className="button green">Café Potência</a>
-          <a href="#" className="button green">Loja Potência</a>
-          <a href="#" className="button green">Pedidos de Oração</a>
-          <a href="#" className="buttonm green">Enviar Testemunhos</a>
-          <a href="#" className="buttonm green">Sorteio Potência 2023</a>
-        </div>
-      </div>
-    </div>
+    <Router>
+      <Routes>
+      <Route path="/" element={<HomePage />} />
+        <Route path="/pedidos-oracao" element={<PedidosOracaoPage />} />
+        <Route path="/enviar-testemunhos" element={<EnviarTestemunhosPage />} />
+        <Route path="/sorteio" element={<SorteioPage />} />
+      </Routes>
+    </Router>
   );
 }
 
 export default App;
-
