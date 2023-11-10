@@ -85,4 +85,10 @@ button:hover {
 h2 {
   margin-bottom: 10%;
   font-size: 30px;
+  text-align: center;
+}
+img {
+  width: 30%;
+  padding-top: 8%;
+  align-items: center;
 }

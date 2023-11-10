@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './SorteioPage.css';
+import logo from './potencia.jpg';
 
 function SorteioPage() {
   const [formData, setFormData] = useState({
@@ -7,39 +8,53 @@ function SorteioPage() {
     sobrenome: '',
     whatsapp: '',
     email: '',
-    enviarTest: '',
+    bairro: '',
+    comoSoube: 'selecione', // Valor padrão para a opção "Selecione"
+    idade: 'selecione', // Valor padrão para a opção "Selecione"
   });
+
+  const [enviado, setEnviado] = useState(false);
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('dadosFormulario')) || {};
     setFormData((prevData) => ({ ...prevData, ...storedData }));
   }, []);
 
-  // verifica se os campos de nome, sobrenome, whatsapp e email já foram preenchidos
-  const camposIniciaisPreenchidos = formData.nome && formData.sobrenome && formData.whatsapp && formData.email;
-
-  // lida com mudanças nos campos do formulário
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // lida com o envio do formulário
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Adicione aqui a lógica de envio do formulário, se necessário
 
-    // salva dados no localStorage
-    localStorage.setItem('dadosFormulario', JSON.stringify(formData));
+    // Verifica se todos os campos obrigatórios estão preenchidos
+    if (
+      formData.nome &&
+      formData.sobrenome &&
+      formData.whatsapp &&
+      formData.email &&
+      formData.bairro &&
+      formData.comoSoube !== 'selecione' &&
+      formData.idade !== 'selecione'
+    ) {
+      // Salva dados no localStorage
+      localStorage.setItem('dadosFormulario', JSON.stringify(formData));
+      setEnviado(true);
+    } else {
+      // Se os campos obrigatórios não estão preenchidos, mostra um alerta ou outra mensagem
+      alert('Por favor, preencha todos os campos obrigatórios.');
+    }
   };
 
-  const algumFormularioPreenchido = camposIniciaisPreenchidos;
+  const algumFormularioPreenchido = enviado || (formData.nome && formData.sobrenome && formData.whatsapp && formData.email);
 
   return (
     <div className="sorteio-container">
+      <img src={logo} alt="Logo" />
       <h2>SORTEIO POTÊNCIA 2023</h2>
       <div id="blocos">
-      <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           {/* Verifica se pelo menos um dos formulários foi preenchido*/}
           {!algumFormularioPreenchido && (
             <>
@@ -62,6 +77,7 @@ function SorteioPage() {
 
           <label className='titulos' htmlFor="como-soube">Como você ficou sabendo da Conferência Potência?</label>
           <select id="como-soube" name="comoSoube" value={formData.comoSoube} onChange={handleChange}>
+            <option value="selecione">Selecione</option>
             <option value="redes-sociais">Redes Sociais</option>
             <option value="youtube">YouTube</option>
             <option value="familia-amigos">Família / Amigos</option>
@@ -76,6 +92,7 @@ function SorteioPage() {
 
           <label className='titulos' htmlFor="idade">Qual é a sua faixa etária?</label>
           <select id="idade" name="idade" value={formData.idade} onChange={handleChange}>
+            <option value="selecione">Selecione</option>
             <option value="idade-12-17">12-17</option>
             <option value="idade-18-25">18-25</option>
             <option value="idade-26-35">26-35</option>
@@ -83,7 +100,7 @@ function SorteioPage() {
             <option value="idade-46-mais">46+</option>
           </select>
 
-          <button type="submit">PARTICIPAR DO SORTEIO</button>
+          <button type="submit" disabled={!algumFormularioPreenchido}>PARTICIPAR DO SORTEIO</button>
         </form>
       </div>
     </div>
