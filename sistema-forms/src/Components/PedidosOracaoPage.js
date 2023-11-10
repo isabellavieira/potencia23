@@ -16,18 +16,25 @@ function PedidosOracaoPage() {
     setFormData((prevData) => ({ ...prevData, ...storedData }));
   }, []);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    localStorage.setItem('dadosFormulario', JSON.stringify(formData));
-  };
 
-  const camposIniciaisPreenchidos = formData.nome && formData.sobrenome && formData.whatsapp && formData.email;
-  const algumFormularioPreenchido = camposIniciaisPreenchidos;
+    // Atualiza o estado do formulário com os novos dados
+    setFormData({
+      ...formData,
+      nome: event.target.nome.value,
+      sobrenome: event.target.sobrenome.value,
+      whatsapp: event.target.whatsapp.value,
+      email: event.target.email.value,
+      pedidoOracao: event.target.pedidoOracao.value,
+    });
+
+    // Salva os dados atualizados no localStorage
+    localStorage.setItem('dadosFormulario', JSON.stringify(formData));
+
+    // Limpa o formulário após o envio
+    event.target.reset();
+  };
 
   return (
     <div className="pedido-oracao-container">
@@ -35,26 +42,57 @@ function PedidosOracaoPage() {
       <h2>PEDIDOS DE ORAÇÃO</h2>
       <div id="blocos">
         <form onSubmit={handleSubmit}>
-          {!algumFormularioPreenchido && (
-            <>
-              <label className='titulos' htmlFor="nome">Nome:</label>
-              <input type="text" id="nome" name="nome" value={formData.nome} onChange={handleChange} required />
+          <label className='titulos' htmlFor="nome">Nome:</label>
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            value={formData.nome}
+            onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+            required
+          />
 
-              <label className='titulos' htmlFor="sobrenome">Sobrenome:</label>
-              <input type="text" id="sobrenome" name="sobrenome" value={formData.sobrenome} onChange={handleChange} required />
+          <label className='titulos' htmlFor="sobrenome">Sobrenome:</label>
+          <input
+            type="text"
+            id="sobrenome"
+            name="sobrenome"
+            value={formData.sobrenome}
+            onChange={(e) => setFormData({ ...formData, sobrenome: e.target.value })}
+            required
+          />
 
-              <label className='titulos' htmlFor="whatsapp">WhatsApp:</label>
-              <input type="tel" id="whatsapp" name="whatsapp" value={formData.whatsapp} onChange={handleChange} required />
+          <label className='titulos' htmlFor="whatsapp">WhatsApp:</label>
+          <input
+            type="tel"
+            id="whatsapp"
+            name="whatsapp"
+            value={formData.whatsapp}
+            onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
+            required
+          />
 
-              <label className='titulos' htmlFor="email">E-mail:</label>
-              <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
-            </>
-          )}
+          <label className='titulos' htmlFor="email">E-mail:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            required
+          />
 
           <label className='titulos' htmlFor="pedido-oracao">Pedido de Oração:</label>
-          <textarea id="pedido-oracao" name="pedidoOracao" rows="4" value={formData.pedidoOracao} onChange={handleChange} required />
+          <textarea
+            id="pedido-oracao"
+            name="pedidoOracao"
+            rows="4"
+            value={formData.pedidoOracao}
+            onChange={(e) => setFormData({ ...formData, pedidoOracao: e.target.value })}
+            required
+          />
 
-          <button type="submit" disabled={!algumFormularioPreenchido}>ENVIAR</button>
+          <button type="submit">ENVIAR</button>
         </form>
       </div>
     </div>
