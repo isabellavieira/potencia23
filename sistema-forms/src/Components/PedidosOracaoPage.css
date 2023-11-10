@@ -1,4 +1,4 @@
-/* PedidosOracaoPage.css */
+
 .pedido-oracao-container {
   text-align: center;
   padding: 20px;
@@ -36,12 +36,11 @@ form {
   padding: 10px;
   margin-bottom: 20px;
   border-radius: 8px;
-  width: 48%; /* Largura fixa para todos os campos */
+  width: 48%;
   font-size: 17px;
 }
 #pedido-oracao{
-  font-family: 'Archivo', sans-serif; /* Adicionado a fonte 'Archivo' */
-  font-weight: bold;
+  font-family: 'Archivo', sans-serif;
   padding: 10px;
   margin-bottom: 20px;
   border-radius: 8px;
@@ -50,7 +49,7 @@ form {
   height: 150px;
 }
 #email {
-  font-family: 'Archivo', sans-serif; /* Adicionado a fonte 'Archivo' */
+  font-family: 'Archivo', sans-serif;
   font-weight: bold;
   padding: 10px;
   margin-bottom: 20px;

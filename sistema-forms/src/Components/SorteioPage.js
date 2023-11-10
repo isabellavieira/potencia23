@@ -7,61 +7,41 @@ function SorteioPage() {
     sobrenome: '',
     whatsapp: '',
     email: '',
-    bairro: '',
-    comoSoube: '',
-    idade: ''
+    enviarTest: '',
   });
-
-  const [enviado, setEnviado] = useState(false);
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('dadosFormulario')) || {};
     setFormData((prevData) => ({ ...prevData, ...storedData }));
   }, []);
 
+  // verifica se os campos de nome, sobrenome, whatsapp e email já foram preenchidos
+  const camposIniciaisPreenchidos = formData.nome && formData.sobrenome && formData.whatsapp && formData.email;
+
+  // lida com mudanças nos campos do formulário
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  // lida com o envio do formulário
   const handleSubmit = (event) => {
     event.preventDefault();
+    // Adicione aqui a lógica de envio do formulário, se necessário
 
-    // Verifica se os campos obrigatórios estão preenchidos
-    if (formData.nome && formData.sobrenome && formData.whatsapp && formData.email) {
-      // Salva dados no localStorage
-      localStorage.setItem('dadosFormulario', JSON.stringify(formData));
-      setEnviado(true);
-    } else {
-      // Se os campos obrigatórios não estão preenchidos, mostra um alerta ou outra mensagem
-      alert('Por favor, preencha todos os campos obrigatórios.');
-    }
+    // salva dados no localStorage
+    localStorage.setItem('dadosFormulario', JSON.stringify(formData));
   };
 
-  useEffect(() => {
-    // Adiciona lógica para ocultar campos nos outros formulários quando enviado
-    if (enviado) {
-      const outrosFormularios = ['form1', 'form2', 'form3']; // Substitua pelos IDs dos seus outros formulários
-      outrosFormularios.forEach((formId) => {
-        const outrosFormData = JSON.parse(localStorage.getItem(`${formId}_dadosFormulario`)) || {};
-        outrosFormData.nome = '';
-        outrosFormData.sobrenome = '';
-        outrosFormData.whatsapp = '';
-        outrosFormData.email = '';
-        localStorage.setItem(`${formId}_dadosFormulario`, JSON.stringify(outrosFormData));
-      });
-    }
-  }, [enviado]);
-
-  const camposIniciaisPreenchidos = formData.nome && formData.sobrenome && formData.whatsapp && formData.email;
-  const algumFormularioPreenchido = camposIniciaisPreenchidos || enviado;
+  const algumFormularioPreenchido = camposIniciaisPreenchidos;
 
   return (
     <div className="sorteio-container">
       <h2>SORTEIO POTÊNCIA 2023</h2>
       <div id="blocos">
       <form onSubmit={handleSubmit}>
-          {!enviado && (
+          {/* Verifica se pelo menos um dos formulários foi preenchido*/}
+          {!algumFormularioPreenchido && (
             <>
               <label className='titulos' htmlFor="nome">Nome:</label>
               <input type="text" id="nome" name="nome" value={formData.nome} onChange={handleChange} />
@@ -76,12 +56,10 @@ function SorteioPage() {
               <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} />
             </>
           )}
-          
-          {/* Adicionando a pergunta "Qual Bairro você mora?" */}
+
           <label className='titulos' htmlFor="bairro">Em qual bairro você mora?</label>
           <input type="text" id="bairro" name="bairro" value={formData.bairro} onChange={handleChange} />
 
-          {/* Adicionando a pergunta "Como você ficou sabendo da Conferência Potência?" */}
           <label className='titulos' htmlFor="como-soube">Como você ficou sabendo da Conferência Potência?</label>
           <select id="como-soube" name="comoSoube" value={formData.comoSoube} onChange={handleChange}>
             <option value="redes-sociais">Redes Sociais</option>
@@ -96,7 +74,6 @@ function SorteioPage() {
             <option value="conhecia">Já conhecia, sou Potência raiz</option>
           </select>
 
-          {/* Adicionando a pergunta "Qual sua faixa etária?" */}
           <label className='titulos' htmlFor="idade">Qual é a sua faixa etária?</label>
           <select id="idade" name="idade" value={formData.idade} onChange={handleChange}>
             <option value="idade-12-17">12-17</option>
@@ -114,5 +91,3 @@ function SorteioPage() {
 }
 
 export default SorteioPage;
-
-

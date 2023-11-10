@@ -7,61 +7,41 @@ function EnviarTestemunhosPage() {
     sobrenome: '',
     whatsapp: '',
     email: '',
-    enviarTest: ''
+    enviarTest: '',
   });
-
-  const [enviado, setEnviado] = useState(false);
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('dadosFormulario')) || {};
     setFormData((prevData) => ({ ...prevData, ...storedData }));
   }, []);
 
+  // verifica se os campos de nome, sobrenome, whatsapp e email já foram preenchidos
+  const camposIniciaisPreenchidos = formData.nome && formData.sobrenome && formData.whatsapp && formData.email;
+
+  // lida com mudanças nos campos do formulário
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  // lida com o envio do formulário
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    // Verifica se os campos obrigatórios estão preenchidos
-    if (formData.nome && formData.sobrenome && formData.whatsapp && formData.email) {
-      // Salva dados no localStorage
-      localStorage.setItem('dadosFormulario', JSON.stringify(formData));
-      setEnviado(true);
-    } else {
-      // Se os campos obrigatórios não estão preenchidos, mostra um alerta ou outra mensagem
-      alert('Por favor, preencha todos os campos obrigatórios.');
-    }
+    // salva dados no localStorage
+    localStorage.setItem('dadosFormulario', JSON.stringify(formData));
   };
 
-  useEffect(() => {
-    // Adiciona lógica para ocultar campos nos outros formulários quando enviado
-    if (enviado) {
-      const outrosFormularios = ['form1', 'form2', 'form3']; // Substitua pelos IDs dos seus outros formulários
-      outrosFormularios.forEach((formId) => {
-        const outrosFormData = JSON.parse(localStorage.getItem(`${formId}_dadosFormulario`)) || {};
-        outrosFormData.nome = '';
-        outrosFormData.sobrenome = '';
-        outrosFormData.whatsapp = '';
-        outrosFormData.email = '';
-        localStorage.setItem(`${formId}_dadosFormulario`, JSON.stringify(outrosFormData));
-      });
-    }
-  }, [enviado]);
-
-  const camposIniciaisPreenchidos = formData.nome && formData.sobrenome && formData.whatsapp && formData.email;
-  const algumFormularioPreenchido = camposIniciaisPreenchidos || enviado;
+  const algumFormularioPreenchido = camposIniciaisPreenchidos;
 
   return (
-    <div className="enviar-testemunhos-container">
+    <div className="pedido-oracao-container">
       <h2>ENVIE SEUS TESTEMUNHOS</h2>
       <div id="blocos">
         <form onSubmit={handleSubmit}>
-          {!enviado && !algumFormularioPreenchido &&(
+          {/* Verifica se pelo menos um dos formulários foi preenchido */}
+          {!algumFormularioPreenchido && (
             <>
-              {/* Campos de nome, sobrenome, whatsapp e email */}
+  
               <label className='titulos' htmlFor="nome">Nome:</label>
               <input type="text" id="nome" name="nome" value={formData.nome} onChange={handleChange} />
 

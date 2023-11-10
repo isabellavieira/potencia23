@@ -1,4 +1,4 @@
-// Componente com botões
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 
