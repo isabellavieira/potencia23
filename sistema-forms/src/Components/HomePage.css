@@ -29,7 +29,7 @@ p {
   color: #000000;
   line-height: 46px;
   text-align: center;
-  font-size: 1.4em;
+  font-size: 1.2em;
   font-family: 'Archivo', sans-serif;
   font-weight: bold;
   background-color: #ccff00;
@@ -62,4 +62,9 @@ p {
 
 #ola {
   padding-top: 5%;
+}
+
+img {
+  width: 30%;
+  padding-top: 8%;
 }

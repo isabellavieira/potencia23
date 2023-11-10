@@ -1,12 +1,23 @@
-// HomePage.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
+import logo from './potencia.jpg'; // Atualize o caminho conforme necessário
+
 
 function HomePage() {
+  const [nome, setNome] = useState('');
+
+  useEffect(() => {
+    // Buscar o nome do localStorage
+    const storedName = localStorage.getItem('dadosFormulario') ? JSON.parse(localStorage.getItem('dadosFormulario')).nome : '';
+    // Atualizar o estado com o nome recuperado
+    setNome(storedName);
+  }, []);
+
   return (
     <div className="container">
-      <h1 id="ola">OLÁ!</h1>
+       <img src={logo} alt="Logo" />
+       <h1 id="ola">{nome ? `OLÁ, ${nome.toUpperCase()}!` : 'OLÁ!'}</h1>
       <p className="destaque">
         Chegou o grande dia! O Potência 2023 vai ficar marcado na sua história.
       </p>
