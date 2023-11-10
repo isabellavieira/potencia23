@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
-import logo from './potencia.jpg'; // Atualize o caminho conforme necessário
+import logo from './potencia.jpg';
 
 
 function HomePage() {
