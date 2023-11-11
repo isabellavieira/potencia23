@@ -10,8 +10,7 @@ function HomePage() {
   useEffect(() => {
     // Buscar o nome do localStorage
     const storedName = localStorage.getItem('dadosFormulario') ? JSON.parse(localStorage.getItem('dadosFormulario')).nome : '';
-    // Atualizar o estado com o nome recuperado
-    setNome(storedName);
+    setNome(storedName); //coloca o nome
   }, []);
 
   return (
