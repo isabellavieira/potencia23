@@ -22,7 +22,7 @@ function SorteioPage() {
     const { nome, sobrenome, whatsapp, email } = storedData;
     const algumFormularioPreenchido = nome && sobrenome && whatsapp && email;
 
-    if (algumFormularioPreenchido) {
+    if (algumFormularioPreenchido && !storedData.enviado) {
       setOutroFormularioPreenchido(true);
       // Se algum formulário foi preenchido, oculta os campos
       setFormData({ bairro: '', comoSoube: '', idade: '' });
@@ -38,18 +38,20 @@ function SorteioPage() {
 
     setFormData({
       ...formData,
-      nome: event.target.nome.value,
-      sobrenome: event.target.sobrenome.value,
-      whatsapp: event.target.whatsapp.value,
-      email: event.target.email.value,
-      bairro: event.target.bairro.value,
-      comoSoube: event.target.comoSoube.value,
-      idade: event.target.idade.value
+      nome: event.target.nome?.value || '',
+      sobrenome: event.target.sobrenome?.value || '',
+      whatsapp: event.target.whatsapp?.value || '',
+      email: event.target.email?.value || '',
+      bairro: event.target.bairro?.value || '',
+      comoSoube: event.target.comoSoube?.value || '',
+      idade: event.target.idade?.value || ''
     });
-
-    localStorage.setItem('dadosFormulario', JSON.stringify(formData));
-    event.target.reset();
+  
   };
+
+  useEffect(() => {
+    localStorage.setItem('dadosFormulario', JSON.stringify(formData));
+  }, [formData]);
 
   return (
     <div className="sorteio-container">
